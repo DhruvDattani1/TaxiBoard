@@ -52,34 +52,55 @@
 
 6. **Environment Setup**
 
-   * Install .NET SDK (latest LTS).
+   * Install .NET SDK (latest LTS (9.0)).
+   * Install Entity Framework Core CLI (ORM Tooling)
    * Install EF Core, Npgsql (Postgres provider).
+   * Install Utility Packages (Swagger, Memory Cache, Serilog, DotNetEnv) 
+   * Create `.env` file and set environment variables 
+   * Create `appsettings.Development.json` for local configuration
+   * add to .gitignore
+   
 7. **Scaffold Project**
 
    * `dotnet new webapi -o TaxiApi`.
-   * Add DbContext with EF migrations linked to Postgres.
-8. **Model**
+   * Navigate into project directory and run the app 
+   * Add `.env` and `appsettings.Development.local.json` configuration files 
+   * Update `Program.cs` to load environment variables using DotNetEnv 
+   * Verify API runs on localhost
 
-   * Create `Trip` model based on DB schema.
-9. **Controller**
+8. **Entity Framework Core Setup**
 
-   * Add `TripsController`:
+   * Create `TaxiContext` class in the `/Data` directory.  
+   * Register `TaxiContext` in `Program.cs` using `builder.Services.AddDbContext<TaxiContext>()`.  
+   * Verify connection with Postgres by running a simple migration (`dotnet ef migrations add InitialCreate`).  
+   * Confirm EF Core connects successfully before adding models.
 
-     * `GET /api/trips?page=1&pageSize=50`
-     * Optional filters (date range, passenger count).
-   * Return JSON in REST style.
-10. **Serialization & Format**
+9. **Model**
 
-    * Ensure JSON responses.
-    * Stick to REST principles (resources, nouns, stateless calls).
-11. **Docs**
+   * Create model classes in `/Models` (e.g., `Vendor`, `RateCode`, `PaymentType`, `TaxiZone`, `YellowTripData`).  
+   * Match model fields and types to the Postgres schema.  
+   * Add `DbSet<>` properties in `TaxiContext` for each model.  
+   * Run `dotnet ef migrations add AddTaxiModels` to validate model bindings.
 
-    * Add Swagger/OpenAPI (`Swashbuckle.AspNetCore`).
-    * Check endpoints in browser.
-12. **Testing**
+10. **Controller**
 
-    * Use Postman for quick CRUD/GET checks.
-    * Deliverable: API running locally, tested, documented.
+   * Add `TripsController` to expose core endpoints.  
+   * Implement `GET /api/trips?page=1&pageSize=50` with pagination and optional filters (date range, passenger count).  
+   * Use dependency injection to access `TaxiContext`.  
+   * Return responses in clean REST JSON format.
+
+11. **Serialization & Format**
+
+   * Configure JSON serialization (camelCase, date formatting).  
+   * Add `[Produces("application/json")]` to controllers if needed.  
+   * Ensure all endpoints follow REST conventions (nouns, stateless, proper status codes).
+
+12. **Documentation & Testing**
+
+   * Enable Swagger/OpenAPI (`Swashbuckle.AspNetCore`) and verify endpoints in the browser (`/swagger`).  
+   * Use Postman or curl for endpoint validation and filter testing.  
+   * Optionally add unit tests later with `xUnit` or `NUnit` to verify controller logic.
+
 
 ---
 
