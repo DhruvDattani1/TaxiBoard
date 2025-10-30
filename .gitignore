@@ -14,7 +14,7 @@ __pycache__/
 *.key
 *.pem
 *.pfx
-appsettings.*.local.json
+appsettings.*.json
 
 /API/TaxiBoard/wwwroot/
 *.db
