@@ -59,7 +59,7 @@
    * Create `.env` file and set environment variables 
    * Create `appsettings.Development.json` for local configuration
    * add to .gitignore
-   
+
 7. **Scaffold Project**
 
    * `dotnet new webapi -o TaxiApi`.
@@ -70,10 +70,9 @@
 
 8. **Entity Framework Core Setup**
 
-   * Create `TaxiContext` class in the `/Data` directory.  
-   * Register `TaxiContext` in `Program.cs` using `builder.Services.AddDbContext<TaxiContext>()`.  
-   * Verify connection with Postgres by running a simple migration (`dotnet ef migrations add InitialCreate`).  
-   * Confirm EF Core connects successfully before adding models.
+   * Create `TaxiBoardContext` class in the `/Data` directory.  
+   * Register `TaxiContext` in `Program.cs` using `builder.Services.AddDbContext<TaxiContext>()`.   
+   * Confirm EF Core connects successfully before adding models. And can query the DB
 
 9. **Model**
 

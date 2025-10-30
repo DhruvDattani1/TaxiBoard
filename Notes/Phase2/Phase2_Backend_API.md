@@ -15,7 +15,7 @@
 ## EF Core + Npgsql Provider install in project dir
 - dotnet add package Microsoft.EntityFrameworkCore
 - dotnet add package Microsoft.EntityFrameworkCore.Design
-- dotnet add package Npgsql.EntityFraemworkCore.Postgresql
+- dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 
 ## Swagger UI package
 - dotnet add package Swashbuckle.AspNetCore
@@ -29,13 +29,16 @@
 # Env setup
 - touch .env
 - ASPNETCORE_ENVIRONMENT=Development
-- ConnectionStrings__Default=Host=localhost;Database=nyc_yellow_taxi_db
-Username=yellow_taxi_user;Password=yellow_taxi_user
+- DB_CONNECTION_STRING=Host=localhost;Database=nyc_yellow_taxi_db;Username=yellow_taxi_user;Password=yellow_taxi_user
 - dotnet add package DotNetEnv
 - touch appsettings.Development.json
 
 # EF Core setup
-- 
+- mkdir Data (in TaxiBoard root)
+- Data/TaxiContext.cs (this is the session built between the app and postgres)
+- set DB_CONNECTION_STRING if its not already (env)
+
+
 
 
 
