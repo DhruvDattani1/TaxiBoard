@@ -74,12 +74,20 @@
    * Register `TaxiContext` in `Program.cs` using `builder.Services.AddDbContext<TaxiContext>()`.   
    * Confirm EF Core connects successfully before adding models. And can query the DB
 
-9. **Model**
+9. **Models**
 
-   * Create model classes in `/Models` (e.g., `Vendor`, `RateCode`, `PaymentType`, `TaxiZone`, `YellowTripData`).  
-   * Match model fields and types to the Postgres schema.  
-   * Add `DbSet<>` properties in `TaxiContext` for each model.  
-   * Run `dotnet ef migrations add AddTaxiModels` to validate model bindings.
+   * Define one C# model per table under `/Models` — e.g., `Vendor`, `RateCode`, `PaymentType`, `TaxiZone`, and `YellowTripData`.  
+   * Use **attribute-based mapping** (`[Key]`, `[ForeignKey]`, `[Required]`, `[StringLength]`) to mirror the Postgres schema and enforce validation.  
+   * Map PostgreSQL column types directly to C# types (`integer → int`, `timestamp → DateTime`, `numeric → decimal`, etc.).  
+   * Keep properties non-nullable when the dataset uses special values like `99` or `0` for “unknown,” so the models reflect the raw data accurately.  
+   * Add a **surrogate primary key** (e.g., `Id`) to `YellowTripData` so EF Core can uniquely track each record.  
+   * All models share the same **DbContext** (`TaxiBoardContext` in `/Data`) and are exposed through `DbSet<>` properties.  
+   * Define foreign keys through **navigation properties**; EF Core reads these to build joins automatically.  
+   * Include an empty or extended **`OnModelCreating(ModelBuilder)`** method in the context to fine-tune relationships (`HasOne`, `WithMany`, etc.) beyond attributes.  
+   * Run `dotnet ef migrations add InitTaxiModels` to generate the initial migration and confirm EF Core recognizes the schema (skip `database update` if the DB already exists).  
+
+
+
 
 10. **Controller**
 

@@ -38,6 +38,19 @@
 - Data/TaxiContext.cs (this is the session built between the app and postgres)
 - set DB_CONNECTION_STRING if its not already (env)
 
+# Models
+- dotnet ef migrations add InitTaxiModels
+    - compares model classes against db
+    - generate new migration file under /Migrations
+- dotnet ef database update (I'm not doing this since I have the db setup already)
+    - Applies said migration to DB
+    - in the future it is best to do the follwoing if you want to add incremental changes
+        - dotnet ef migrations add AddNewFeature
+        - dotnet ef database update
+
+
+
+
 
 
 

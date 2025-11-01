@@ -1,0 +1,10 @@
+ - Azure Key vault integraiton for secrete managmeent
+ - Secrete Manager for dev
+ - Good to have sink for your serilog stuff (may need to install this, then update appsettings t outilize)
+    - setup logging constructure then inject
+ - Program.cs file typical flow:
+     - build the host
+     - register the services
+     - build the app
+     - configure middleware and endpoints
+     - then run the app

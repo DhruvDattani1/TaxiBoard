@@ -105,3 +105,29 @@ It’s normalized into lookup (dimension) tables and a central fact table (`yell
                 │
  taxi_zones ────┬── PULocationID → Pickup
                  └── DOLocationID → Dropoff
+
+---
+
+## Relationships enforced via EF core OnModelCreating method
+
+**Vendor Relationship**
+- trip belongs to one vendor
+- vendor can have many trips
+- VendorId is foreign key
+
+**RateCode Relationship**
+- each trip has one rate code
+- one rate code can appear in many trips
+
+**PaymentType Relationship**
+- each trip has one payment m,ethod
+- one  payment method can be used for many trips
+
+**Pickup Zone Relationship**
+- Defines the pickup location link between a trip and taxi zone.
+- one rate code can appear in many trips
+- prevent deleting a zone
+
+**Dropoff Zone Relationship**
+- same as pickup
+

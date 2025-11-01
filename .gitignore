@@ -31,3 +31,9 @@ obj/
 *.suo
 *.userosscache
 *.sln.docstates
+
+**/Migrations/
+**/Migrations/*.Designer.cs
+**/Migrations/*.Snapshot.cs
+
+**/Properties/launchSettings.json

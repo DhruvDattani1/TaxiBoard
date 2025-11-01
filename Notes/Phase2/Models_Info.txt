@@ -1,0 +1,36 @@
+- models will be defined in /Models and EF Core (ORM) will map to DB tables
+
+- models share the db context (TaxiBoardContext) found in Data/TaxiContext.cs
+
+- tables denoted by DbSets in that context ^
+
+- Foreign keys are defined by navigation properties
+    - EF core reads these and creates joins accordingly
+
+- So we'll map postgres types to C# types
+
+- plan on using [Key] [ForeignKey] [Required] and [StringLength()] for validation and attributes
+
+- try to apply migrations early to verify structure
+
+- model bindings will allow HTTP Request data to be mapped to the model classes (just makes it easier to  PUT, POST or PATCH requests)
+    - focusing on GET rn so not ot worried
+
+- one C# model per table under /Models dir
+    - each class mirrors its table columns with corresponding C# types
+
+- Update Db context entries for each model in the context object
+
+- Verify Mappings via dotnet ef
+
+- going to use Attribute-based Mapping cause its simpler and logic is kind of ketp in one place (my data set is tiny)
+    - when you scale you use Fluent API 
+
+- I have data for null values so keeping those properties non-nullable is fine (we're trying to mirror the raw dataset as best as possible)
+    - can still luse helper methods or constances to interprest null or special values (don't have to make everything nullable)
+
+
+- surrogate primary key for the auto incrementation or records (for EF CORE to recognize unique records)
+
+- Deciding to use the EF Core method OnModeelCreating (its going to run the the model is being built)
+    - just a central place to fine tuning relationships beyond attributes
