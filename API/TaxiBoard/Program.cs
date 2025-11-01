@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using TaxiBoard.Data;
+using Serilog.Aspnetcore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
