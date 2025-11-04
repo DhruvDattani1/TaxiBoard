@@ -32,7 +32,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapGet("/", () => Results.Ok("TaxiBoard API is running"));
+// app.MapGet("/", () => Results.Ok("TaxiBoard API is running"));
 
 //test the connection
 using (var scope = app.Services.CreateScope())
@@ -106,6 +106,10 @@ var appTask = Task.Run(async () =>
     await TestEndpoint("/api/vendors", "/api/vendors");
     await TestEndpoint("/api/paymenttypes", "/api/paymenttypes");
     await TestEndpoint("/api/zones", "/api/zones");
+
+    const string startDate = "2025-01-15";
+    const string endDate = "2025-01-17";
+    await TestEndpoint($"/api/analytics?startDate={startDate}&endDate={endDate}", "/api/analytics");
 });
 
 app.Run();

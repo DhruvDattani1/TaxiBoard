@@ -88,16 +88,14 @@
 
 10. **Controllers**
 
-* Implement domain-specific controllers aligned with planned frontend sections: `TripsController`, `ZonesController`, `PaymentTypesController`, `VendorsController`, and `AnalyticsController` (planned).
-* Use LINQ queries on `TaxiBoardContext` for efficient joins, projections, and filtering.
-* Map query results to DTOs to define clear, decoupled response shapes.
-* Apply pagination and filtering logic where relevant (e.g., date range, zone, passenger count).
-* Inject the DbContext through constructor-based dependency injection for testability.
-* Return lightweight, stateless JSON responses that follow REST conventions.
-* Keep controllers cohesive — one per functional dataset or page, not per database table.
-* Verify and explore all endpoints through Swagger to ensure correct routing and response structure.
- 
-
+    * Implement domain-specific controllers aligned with planned frontend sections: `TripsController`, `ZonesController`, `PaymentTypesController`, `VendorsController`, and `AnalyticsController`.
+    * Use LINQ queries on `TaxiBoardContext` for efficient joins, projections, and filtering.
+    * Map query results to DTOs to define clear, decoupled response shapes.
+    * Apply pagination and filtering logic where relevant (e.g., date range, zone, passenger count).
+    * Inject the DbContext through constructor-based dependency injection for testability.
+    * Return lightweight, stateless JSON responses that follow REST conventions.
+    * Keep controllers cohesive — one per functional dataset or page, not per database table.
+    * Verify and explore all endpoints through Swagger to ensure correct routing and response structure.
 
 11. **Serialization & Format**
 
