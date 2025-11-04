@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TaxiApi.Models
+namespace TaxiBoard.Models
 {
     [Table("vendors")]
     public class Vendor

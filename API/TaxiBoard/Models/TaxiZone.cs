@@ -1,20 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TaxiApi.Models
+namespace TaxiBoard.Models
 {
     [Table("taxi_zones")]
     public class TaxiZone
     {
         [Key]
-        [Column("LocationID")]
+        [Column("locationid")]
         public int LocationId { get; set; }
 
-        [Column("Borough")]
+        [Column("borough")]
         [StringLength(50)]
         public string Borough { get; set; } = string.Empty;
 
-        [Column("Zone")]
+        [Column("zone")]
         [StringLength(100)]
         public string Zone { get; set; } = string.Empty;
 

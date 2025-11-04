@@ -48,6 +48,11 @@
         - dotnet ef migrations add AddNewFeature
         - dotnet ef database update
 
+# Add Surrogate id key to db
+
+- ALTER TABLE yellow_tripdata ADD COLUMN id SERIAL PRIMARY KEY;
+
+
 
 
 

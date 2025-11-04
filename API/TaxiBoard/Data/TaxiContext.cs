@@ -9,25 +9,6 @@ namespace TaxiBoard.Data
             : base(options)
         {
         }
-        public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<RateCode> RateCodes { get; set; }
-        public DbSet<PaymentType> PaymentTypes { get; set; }
-        public DbSet<TaxiZone> TaxiZones { get; set; }
-        public DbSet<YellowTripData> YellowTripData { get; set; }
-
-
-    }
-    using Microsoft.EntityFrameworkCore;
-using TaxiBoard.Models;
-
-namespace TaxiBoard.Data
-{
-    public class TaxiBoardContext : DbContext
-    {
-        public TaxiBoardContext(DbContextOptions<TaxiBoardContext> options)
-            : base(options)
-        {
-        }
 
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<RateCode> RateCodes { get; set; }
@@ -69,4 +50,4 @@ namespace TaxiBoard.Data
     }
 }
 
-}
+

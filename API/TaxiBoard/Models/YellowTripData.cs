@@ -1,16 +1,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TaxiApi.Models
+namespace TaxiBoard.Models
 {
     [Table("yellow_tripdata")]
     public class YellowTripData
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; } 
+        [Column("id")]
+        public int Id { get; set; }
 
-        [Column("VendorID")]
+        [Column("vendorid")]
         public int VendorId { get; set; }
 
         [ForeignKey("VendorId")]
@@ -28,7 +29,7 @@ namespace TaxiApi.Models
         [Column("trip_distance")]
         public decimal TripDistance { get; set; }
 
-        [Column("RatecodeID")]
+        [Column("ratecodeid")]
         public int RateCodeId { get; set; }
 
         [ForeignKey("RateCodeId")]
@@ -38,13 +39,13 @@ namespace TaxiApi.Models
         [StringLength(1)]
         public string? StoreAndFwdFlag { get; set; }
 
-        [Column("PULocationID")]
+        [Column("pulocationid")]
         public int PULocationId { get; set; }
 
         [ForeignKey("PULocationId")]
         public TaxiZone? PickupZone { get; set; }
 
-        [Column("DOLocationID")]
+        [Column("dolocationid")]
         public int DOLocationId { get; set; }
 
         [ForeignKey("DOLocationId")]
@@ -80,7 +81,7 @@ namespace TaxiApi.Models
         [Column("congestion_surcharge")]
         public decimal? CongestionSurcharge { get; set; }
 
-        [Column("Airport_fee")]
+        [Column("airport_fee")]
         public decimal? AirportFee { get; set; }
 
         [Column("cbd_congestion_fee")]

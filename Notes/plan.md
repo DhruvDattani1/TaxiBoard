@@ -86,15 +86,18 @@
    * Include an empty or extended **`OnModelCreating(ModelBuilder)`** method in the context to fine-tune relationships (`HasOne`, `WithMany`, etc.) beyond attributes.  
    * Run `dotnet ef migrations add InitTaxiModels` to generate the initial migration and confirm EF Core recognizes the schema (skip `database update` if the DB already exists).  
 
+10. **Controllers**
 
+* Implement domain-specific controllers aligned with planned frontend sections: `TripsController`, `ZonesController`, `PaymentTypesController`, `VendorsController`, and `AnalyticsController` (planned).
+* Use LINQ queries on `TaxiBoardContext` for efficient joins, projections, and filtering.
+* Map query results to DTOs to define clear, decoupled response shapes.
+* Apply pagination and filtering logic where relevant (e.g., date range, zone, passenger count).
+* Inject the DbContext through constructor-based dependency injection for testability.
+* Return lightweight, stateless JSON responses that follow REST conventions.
+* Keep controllers cohesive — one per functional dataset or page, not per database table.
+* Verify and explore all endpoints through Swagger to ensure correct routing and response structure.
+ 
 
-
-10. **Controller**
-
-   * Add `TripsController` to expose core endpoints.  
-   * Implement `GET /api/trips?page=1&pageSize=50` with pagination and optional filters (date range, passenger count).  
-   * Use dependency injection to access `TaxiContext`.  
-   * Return responses in clean REST JSON format.
 
 11. **Serialization & Format**
 

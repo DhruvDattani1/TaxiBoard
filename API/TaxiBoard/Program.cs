@@ -1,17 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using TaxiBoard.Data;
-using Serilog.Aspnetcore;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// DotNetEnv.Env.Load();
+DotNetEnv.Env.Load();
 
-// var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
-//     ?? builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 // So logging is enabled when your loading from appsettings as opposed to env
 
 builder.Services.AddDbContext<TaxiBoardContext>(options =>
@@ -32,6 +32,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 app.MapControllers();
 
+app.MapGet("/", () => Results.Ok("TaxiBoard API is running"));
+
 //test the connection
 using (var scope = app.Services.CreateScope())
 {
@@ -50,32 +52,63 @@ using (var scope = app.Services.CreateScope())
 }
 
 //try a query. After models are defined I'll be able to register them and execute LINQ queries
-using (var scope = app.Services.CreateScope())
+// using (var scope = app.Services.CreateScope())
+// {
+//     var dbContext = scope.ServiceProvider.GetRequiredService<TaxiBoard.Data.TaxiBoardContext>();
+//     try
+//     {
+//         var conn = dbContext.Database.GetDbConnection();
+//         conn.Open();
+
+//         using (var cmd = conn.CreateCommand())
+//         {
+//             cmd.CommandText = "SELECT COUNT(*) FROM yellow_tripdata;";
+//             var result = cmd.ExecuteScalar();
+//             Console.WriteLine($"Trip count from DB: {result}");
+//         }
+
+//         conn.Close();
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine($"Query failed: {ex.Message}");
+//     }
+// }
+var appTask = Task.Run(async () =>
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<TaxiBoard.Data.TaxiBoardContext>();
-    try
-    {
-        var conn = dbContext.Database.GetDbConnection();
-        conn.Open();
+    await Task.Delay(2000); 
 
-        using (var cmd = conn.CreateCommand())
+    using var client = new HttpClient { BaseAddress = new Uri("http://localhost:5034") };
+
+    async Task TestEndpoint(string path, string name, int maxLen = 300)
+    {
+        try
         {
-            cmd.CommandText = "SELECT COUNT(*) FROM yellow_tripdata;";
-            var result = cmd.ExecuteScalar();
-            Console.WriteLine($"Trip count from DB: {result}");
+            var response = await client.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"{name} endpoint responded successfully:");
+                Console.WriteLine(json.Substring(0, Math.Min(maxLen, json.Length)) + "...\n");
+            }
+            else
+            {
+                Console.WriteLine($"{name} returned status: {response.StatusCode}");
+            }
         }
-
-        conn.Close();
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to query {name}: {ex.Message}");
+        }
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Query failed: {ex.Message}");
-    }
-}
 
-
-app.MapGet("/", () => Results.Ok("TaxiBoard is running"));
+    await TestEndpoint("/api/trips?page=1&pageSize=1", "/api/trips");
+    await TestEndpoint("/api/vendors", "/api/vendors");
+    await TestEndpoint("/api/paymenttypes", "/api/paymenttypes");
+    await TestEndpoint("/api/zones", "/api/zones");
+});
 
 app.Run();
+await appTask;
 
 
