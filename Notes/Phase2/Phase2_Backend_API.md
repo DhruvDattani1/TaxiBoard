@@ -23,6 +23,7 @@
 ## Local Caching package
 - dotnet add package Microsoft.Extensions.Caching.Memory
 
+
 ## Serilog package for logging
 - dotnet add package Serilog.AspNetCore
 - dotnet add package Serilog.Sinks.Console
@@ -54,6 +55,27 @@
 # Add Surrogate id key to db
 
 - ALTER TABLE yellow_tripdata ADD COLUMN id SERIAL PRIMARY KEY;
+
+# Setup Testing project
+
+- dotnet new xunit -o TaxiBoard.Tests
+- dotnet new sln -n TaxiBoard  
+- dotnet sln TaxiBoard.sln add TaxiBoard/TaxiBoard.csproj
+- dotnet sln TaxiBoard.sln add TaxiBoard.Tests/TaxiBoard.Tests.csproj
+
+- cd TaxiBoard.Tests
+- dotnet add reference ../TaxiBoard/TaxiBoard.csproj
+
+
+## Required NuGet packages
+
+- dotnet add package Microsoft.NET.Test.Sdk --version 17.12.0
+- dotnet add package xunit --version 2.9.2
+- dotnet add package xunit.runner.visualstudio --version 2.8.2
+- dotnet add package Microsoft.EntityFrameworkCore.InMemory --version 9.0.0
+- dotnet add package coverlet.collector --version 6.0.2
+
+
 
 
 

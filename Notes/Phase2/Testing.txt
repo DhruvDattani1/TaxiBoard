@@ -1,0 +1,15 @@
+- EF Core InMemory
+- Since controllers mainly run LINQ queries against the DbContext, it's best to test actual EF Core behavior instead of mocking.
+- Using something like Moq doesn’t reproduce EF behavior because mocked DbSets don’t execute real LINQ-to-Entities logic, while the InMemory provider does.
+- We aren’t testing PostgreSQL itself, so using an in-memory EF Core database is faster and more appropriate.
+
+- Steps are (from the API root, not inside the TaxiBoard folder):
+
+- create test project
+- add it to the solution file
+- add a project reference from the test project to the main API .csproj
+- install NuGet packages
+- create test directory structure
+- add base class or factory for the in-memory DbContext
+
+

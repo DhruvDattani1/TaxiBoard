@@ -99,6 +99,9 @@
 
 11. **Serialization & Format**
 
+   * System.Text.Json already used as JSON serializer
+   * camelCase is used
+   * since we're using ApiController RESTful conventions are already used
    * Configure JSON serialization (camelCase, date formatting).  
    * Add `[Produces("application/json")]` to controllers if needed.  
    * Ensure all endpoints follow REST conventions (nouns, stateless, proper status codes).
